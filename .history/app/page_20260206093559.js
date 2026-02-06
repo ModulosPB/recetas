@@ -1,14 +1,9 @@
 import Link from 'next/link';
 import db from '@/lib/db';
 
-// 👇 IMPORTANTE: evita el prerender en build (Vercel)
-export const dynamic = 'force-dynamic';
-
 export default async function HomePage() {
   // Obtenemos todas las recetas para mostrarlas en la página principal
-  const [recetas] = await db.query(
-    'SELECT * FROM recetas ORDER BY fecha_creacion DESC'
-  );
+  const [recetas] = await db.query('SELECT * FROM recetas ORDER BY fecha_creacion DESC');
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50">
@@ -30,7 +25,7 @@ export default async function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {recetas.map((receta: any) => (
+          {recetas.map((receta) => (
             <div
               key={receta.id}
               className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 transform hover:-translate-y-2"
@@ -67,12 +62,8 @@ export default async function HomePage() {
         {recetas.length === 0 && (
           <div className="text-center py-16">
             <div className="text-6xl mb-4">🍽️</div>
-            <h3 className="text-2xl font-semibold text-gray-700 mb-2">
-              No hay recetas aún
-            </h3>
-            <p className="text-gray-500 mb-6">
-              ¡Sé el primero en compartir una deliciosa receta!
-            </p>
+            <h3 className="text-2xl font-semibold text-gray-700 mb-2">No hay recetas aún</h3>
+            <p className="text-gray-500 mb-6">¡Sé el primero en compartir una deliciosa receta!</p>
             <Link
               href="/recetas/nueva"
               className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
